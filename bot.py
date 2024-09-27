@@ -63,11 +63,11 @@ async def encarcelar(ctx, nombre_usuario: str, tiempo: str, *, motivo: str):
     usuario = discord.utils.find(lambda m: m.name.lower() == nombre_usuario, ctx.guild.members)
     mencion = usuario.mention if usuario else nombre_usuario
     
-    # Determinar el tiempo de cárcel y la próxima sanción
+    # Determinar la próxima sanción
     if num_advertencia < 5:
         tiempo_proxima_sancion = tiempos_carcel[min(num_advertencia, 4)] // 60
-        unidad = "hora" if tiempo_proxima_sancion == 1 else "horas"
-        proxima_sancion = f"{tiempo_proxima_sancion} {unidad}"
+        unidad = 'hora' if tiempo_proxima_sancion == 1 else 'horas'
+        proxima_sancion = f"{tiempo_proxima_sancion} {unidad} en la cárcel"
     else:
         proxima_sancion = "Expulsión permanente del juego"
 
@@ -85,7 +85,7 @@ async def encarcelar(ctx, nombre_usuario: str, tiempo: str, *, motivo: str):
                             f"Motivo: {motivo}\n"
                             f"Advertencia N°: {num_advertencia}\n"
                             f"Tiempo de cárcel: {tiempo_legible} en la cárcel\n"
-                            f"Próxima Sanción: {proxima_sancion} en la cárcel\n")
+                            f"Próxima Sanción: {proxima_sancion}\n")
 
     # Enviar mensaje de confirmación al canal donde se ejecutó el comando
     await ctx.send(f"{nombre_usuario} ha sido encarcelado por {tiempo_legible}. {motivo}")
@@ -140,4 +140,3 @@ async def borrar(ctx, nombre_usuario: str):
 # Ejecuta el bot
 webserver.keep_alive()
 bot.run(DISCORD_TOKEN)
-
